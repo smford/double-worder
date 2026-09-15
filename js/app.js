@@ -51,6 +51,7 @@ class AmbigramApp {
     this.initElements();
     this.loadStateFromUrl();
     this.initRenderer();
+    this.setTheme(this.state.theme);
     this.bindEvents();
     this.renderPresets();
     this.update();
@@ -90,7 +91,7 @@ class AmbigramApp {
     this.elScaleVal = document.getElementById('val-scale');
 
     // Theme & Mode
-    this.elThemeButtons = document.querySelectorAll('[data-theme]');
+    this.elThemeButtons = document.querySelectorAll('.theme-btn[data-theme]');
     this.elRenderMode = document.getElementById('select-render-mode');
     this.elToggleGuides = document.getElementById('toggle-guides');
     this.elTogglePivot = document.getElementById('toggle-pivot');
@@ -124,6 +125,25 @@ class AmbigramApp {
       this.invertedRenderer = new VectorRenderer(this.elSplitSecondaryContainer);
       this.invertedRenderer.setRotation(180);
     }
+  }
+
+  setTheme(themeName) {
+    const validThemes = ['dark', 'paper', 'blueprint', 'parchment'];
+    const theme = validThemes.includes(themeName) ? themeName : 'dark';
+    this.state.theme = theme;
+
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+
+    if (this.elThemeButtons) {
+      this.elThemeButtons.forEach(btn => {
+        const isMatch = btn.getAttribute('data-theme') === theme;
+        btn.classList.toggle('active', isMatch);
+        btn.setAttribute('aria-checked', isMatch ? 'true' : 'false');
+      });
+    }
+
+    this.update();
   }
 
   loadStateFromUrl() {
@@ -294,13 +314,16 @@ class AmbigramApp {
     }
 
     // Theme buttons
-    this.elThemeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        this.state.theme = btn.getAttribute('data-theme');
-        this.elThemeButtons.forEach(b => b.classList.toggle('active', b === btn));
-        this.update();
+    if (this.elThemeButtons) {
+      this.elThemeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetTheme = btn.getAttribute('data-theme');
+          this.setTheme(targetTheme);
+          this.showToast(`Switched to ${targetTheme.charAt(0).toUpperCase() + targetTheme.slice(1)} theme`);
+        });
       });
-    });
+    }
 
     // 180° Flip Button
     this.elBtnFlip.addEventListener('click', () => {

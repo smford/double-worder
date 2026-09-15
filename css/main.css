@@ -3,7 +3,8 @@
    Modern, sleek, responsive interface with Dark / Paper / Blueprint themes.
    ========================================================================== */
 
-:root {
+:root,
+[data-theme="dark"] {
   /* Core Brand Colors */
   --brand-accent: #f43f5e;
   --brand-accent-hover: #e11d48;
@@ -47,6 +48,9 @@
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #64748b;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
   --canvas-stage-bg: #e2e8f0;
 }
 
@@ -64,6 +68,9 @@
   --text-secondary: #7dd3fc;
   --text-muted: #38bdf8;
   --brand-accent: #00f2fe;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
   --canvas-stage-bg: #030b15;
 }
 
@@ -81,6 +88,9 @@
   --text-secondary: #78350f;
   --text-muted: #92400e;
   --brand-accent: #b45309;
+  --shadow-sm: 0 1px 3px rgba(69, 26, 3, 0.08);
+  --shadow-md: 0 4px 12px rgba(69, 26, 3, 0.08);
+  --shadow-lg: 0 12px 32px rgba(69, 26, 3, 0.14);
   --canvas-stage-bg: #edd6bd;
 }
 
