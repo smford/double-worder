@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Double-Worder — Rotational Ambigram Studio & Vector Generator</title>
+  <meta name="description" content="Generate authentic 180° rotational ambigrams, customize typography and canvas sizes (A4, A3, US Letter), and export CNC/laser-ready DXF and SVG vectors.">
+  <meta name="keywords" content="ambigram, ambigram generator, rotational ambigram, typography, SVG, DXF, laser cutting, CNC, font design">
+  
+  <!-- OpenGraph / Social Meta -->
+  <meta property="og:title" content="Double-Worder — Rotational Ambigram Studio">
+  <meta property="og:description" content="Craft and export 180° rotational ambigrams in standard sheet sizes (A4, A3, US Letter) for print, CNC, and laser cutting.">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body data-theme="dark">
+  <!-- App Shell Header -->
+  <header class="app-header">
+    <div class="header-branding">
+      <div class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 36 36" width="32" height="32">
+          <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3" />
+          <path d="M 10 18 C 10 12, 26 12, 26 18 C 26 24, 10 24, 10 18 Z" fill="currentColor" />
+          <circle cx="18" cy="18" r="2.5" fill="#f43f5e" />
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand-title">Double-Worder</h1>
+        <p class="brand-tagline">Rotational Ambigram Studio & Vector Generator</p>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Quick Theme Selector -->
+      <div class="theme-picker" role="radiogroup" aria-label="Color Theme">
+        <button type="button" class="theme-btn active" data-theme="dark" title="Dark Studio">Dark</button>
+        <button type="button" class="theme-btn" data-theme="paper" title="Clean Paper & Ink">Paper</button>
+        <button type="button" class="theme-btn" data-theme="blueprint" title="CAD Blueprint">Blueprint</button>
+        <button type="button" class="theme-btn" data-theme="parchment" title="Vintage Parchment">Parchment</button>
+      </div>
+
+      <!-- Quick GitHub Link -->
+      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-icon" title="View Source on GitHub">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Grid Workspace -->
+  <main class="app-layout">
+    <!-- Left Sidebar: Controls & Design Tools -->
+    <aside class="sidebar" aria-label="Ambigram Controls">
+      <!-- Section 1: Text & Pairing Mode -->
+      <section class="control-panel">
+        <div class="panel-header">
+          <span class="panel-step">01</span>
+          <h2>Text & Pairing Mode</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="input-text">Primary Text</label>
+          <div class="input-with-counter">
+            <input type="text" id="input-text" maxlength="24" placeholder="e.g. ILLUMINATI" autocomplete="off" spellcheck="false" autofocus>
+            <span class="char-badge">A-Z</span>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label class="custom-checkbox">
+            <input type="checkbox" id="toggle-dual-word">
+            <span class="checkbox-box"></span>
+            <span class="checkbox-label">Dual-Word Flip Mode (reads Word 1 upright, Word 2 inverted)</span>
+          </label>
+        </div>
+
+        <div class="form-group" id="group-secondary-text" style="display: none;">
+          <label for="input-secondary-text">Secondary Text (Inverted 180°)</label>
+          <div class="input-with-counter">
+            <input type="text" id="input-secondary-text" maxlength="24" placeholder="e.g. DEVIL" autocomplete="off" spellcheck="false">
+            <span class="char-badge">180°</span>
+          </div>
+        </div>
+
+        <!-- Curated Inspiration Presets -->
+        <div class="presets-section">
+          <span class="presets-label">Showcase Presets:</span>
+          <div class="presets-chips" id="presets-chips">
+            <!-- Dynamically populated from presets.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Canvas & Physical Sizing -->
+      <section class="control-panel">
+        <div class="panel-header">
+          <span class="panel-step">02</span>
+          <h2>Canvas & Dimensions</h2>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="select-canvas-size">Standard Sheet Size</label>
+            <select id="select-canvas-size" class="custom-select">
+              <optgroup label="International ISO 216 (Default)">
+                <option value="A4" selected>A4 (210 × 297 mm) — Default</option>
+                <option value="A3">A3 (297 × 420 mm) — Poster</option>
+                <option value="A5">A5 (148 × 210 mm) — Booklet</option>
+              </optgroup>
+              <optgroup label="North American ANSI">
+                <option value="US_LETTER">US Letter (8.5 × 11 in)</option>
+                <option value="US_LEGAL">US Legal (8.5 × 14 in)</option>
+                <option value="US_TABLOID">US Tabloid / Ledger (11 × 17 in)</option>
+                <option value="US_JUNIOR_LEGAL">US Junior Legal (5 × 8 in)</option>
+              </optgroup>
+              <optgroup label="Craft & Laser Beds">
+                <option value="VINYL_12">12" Vinyl / Cricut (304.8 × 304.8 mm)</option>
+                <option value="SQUARE_300">Square 300 mm (11.8 × 11.8 in)</option>
+              </optgroup>
+              <optgroup label="Custom">
+                <option value="CUSTOM">Custom Dimensions…</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Orientation</label>
+            <div class="segmented-control" role="radiogroup" aria-label="Orientation">
+              <button type="button" id="btn-orient-landscape" class="segment-btn active" title="Landscape">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><rect x="2" y="5" width="16" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+                Landscape
+              </button>
+              <button type="button" id="btn-orient-portrait" class="segment-btn" title="Portrait">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><rect x="5" y="2" width="10" height="16" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+                Portrait
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Dimensions Form (Shown if CUSTOM selected) -->
+        <div class="custom-size-grid" id="group-custom-size" style="display: none;">
+          <div class="form-group">
+            <label for="input-custom-width">Width</label>
+            <input type="number" id="input-custom-width" value="210" min="20" max="2000" step="1">
+          </div>
+          <div class="form-group">
+            <label for="input-custom-height">Height</label>
+            <input type="number" id="input-custom-height" value="297" min="20" max="2000" step="1">
+          </div>
+          <div class="form-group">
+            <label for="select-custom-unit">Unit</label>
+            <select id="select-custom-unit">
+              <option value="mm" selected>mm</option>
+              <option value="in">in</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header">
+            <label for="slider-margin">Printable Safe Margin</label>
+            <span class="slider-value" id="val-margin">20mm</span>
+          </div>
+          <input type="range" id="slider-margin" min="5" max="60" value="20" step="1">
+        </div>
+      </section>
+
+      <!-- Section 3: Typographic Style -->
+      <section class="control-panel">
+        <div class="panel-header">
+          <span class="panel-step">03</span>
+          <h2>Typographic Style</h2>
+        </div>
+
+        <!-- 4 Font Style Cards -->
+        <div class="style-grid" role="radiogroup" aria-label="Font Style">
+          <button type="button" class="style-card active" data-style="gothic">
+            <div class="style-preview gothic-preview">Gothic</div>
+            <div class="style-meta">
+              <span class="style-title">Gothic Textura</span>
+              <span class="style-desc">Blackletter minims, 45° spurs, Angels & Demons</span>
+            </div>
+          </button>
+
+          <button type="button" class="style-card" data-style="geometric">
+            <div class="style-preview geometric-preview">Modern</div>
+            <div class="style-meta">
+              <span class="style-title">Geometric</span>
+              <span class="style-desc">Constructivist, monoline, futuristic modular curves</span>
+            </div>
+          </button>
+
+          <button type="button" class="style-card" data-style="roman">
+            <div class="style-preview roman-preview">Roman</div>
+            <div class="style-meta">
+              <span class="style-title">Classical Serif</span>
+              <span class="style-desc">Chiseled bracketed serifs, thick-thin stroke modulation</span>
+            </div>
+          </button>
+
+          <button type="button" class="style-card" data-style="stencil">
+            <div class="style-preview stencil-preview">Stencil</div>
+            <div class="style-meta">
+              <span class="style-title">Laser Stencil</span>
+              <span class="style-desc">Continuous bridge cuts for CNC, laser, and vinyl</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Typography Parametric Sliders -->
+        <div class="sliders-list">
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-stroke-width">Stroke Weight</label>
+              <span class="slider-value" id="val-stroke-width">20</span>
+            </div>
+            <input type="range" id="slider-stroke-width" min="8" max="32" value="20" step="1">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-contrast">Stroke Contrast</label>
+              <span class="slider-value" id="val-contrast">2.0x</span>
+            </div>
+            <input type="range" id="slider-contrast" min="1.0" max="2.8" value="2.0" step="0.1">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-spacing">Letter Spacing (Tracking)</label>
+              <span class="slider-value" id="val-spacing">10px</span>
+            </div>
+            <input type="range" id="slider-spacing" min="-8" max="36" value="10" step="1">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-slant">Italic Slant</label>
+              <span class="slider-value" id="val-slant">0°</span>
+            </div>
+            <input type="range" id="slider-slant" min="-15" max="15" value="0" step="1">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-scale">Scale / Zoom</label>
+              <span class="slider-value" id="val-scale">1.0x</span>
+            </div>
+            <input type="range" id="slider-scale" min="0.5" max="1.8" value="1.0" step="0.05">
+          </div>
+
+          <div class="form-group">
+            <label for="select-flourishes">Rotational Ornaments</label>
+            <select id="select-flourishes" class="custom-select">
+              <option value="none">None (Clean Typography)</option>
+              <option value="swashes" selected>Calligraphic Swashes (Top & Bottom)</option>
+              <option value="frame">Architectural Frame Brackets</option>
+              <option value="filigree">Gothic Diamond Endcaps</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Export Center -->
+      <section class="control-panel export-panel">
+        <div class="panel-header">
+          <span class="panel-step">04</span>
+          <h2>Export & CAD Downloads</h2>
+        </div>
+
+        <div class="form-group">
+          <label for="select-render-mode">Vector Style Mode</label>
+          <select id="select-render-mode" class="custom-select">
+            <option value="filled" selected>Solid Filled Outlines (Graphic / Print / Web)</option>
+            <option value="outline">Cut Hairline Only (0.1mm Laser / Vinyl Plotter)</option>
+            <option value="both">Both (Filled + Red Cut Hairline)</option>
+          </select>
+        </div>
+
+        <!-- Quick Toggles -->
+        <div class="toggles-grid">
+          <label class="custom-checkbox">
+            <input type="checkbox" id="toggle-guides" checked>
+            <span class="checkbox-box"></span>
+            <span class="checkbox-label">Print Margin Guides</span>
+          </label>
+          <label class="custom-checkbox">
+            <input type="checkbox" id="toggle-pivot" checked>
+            <span class="checkbox-box"></span>
+            <span class="checkbox-label">180° Pivot Marker</span>
+          </label>
+        </div>
+
+        <!-- Export Buttons Grid -->
+        <div class="export-actions-grid">
+          <button type="button" id="btn-export-svg" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Download SVG
+          </button>
+
+          <button type="button" id="btn-export-dxf" class="btn btn-laser">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+            Download DXF (Laser/CNC)
+          </button>
+
+          <button type="button" id="btn-export-png" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Download PNG (300 DPI)
+          </button>
+
+          <button type="button" id="btn-copy-svg" class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copy SVG Code
+          </button>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Right Area: Interactive Canvas & Viewer -->
+    <section class="stage-viewport" aria-label="Interactive Canvas Preview">
+      <!-- Floating Toolbar Above Canvas -->
+      <div class="canvas-toolbar">
+        <div class="toolbar-left">
+          <span class="dimension-badge" id="canvas-dimension-badge">A4: 297 × 210 mm [LANDSCAPE]</span>
+          <span class="badge badge-upright" id="rotation-badge">0° (Upright)</span>
+        </div>
+
+        <div class="toolbar-right">
+          <!-- Flip 180° Button -->
+          <button type="button" id="btn-flip-180" class="btn-tool btn-flip" title="Flip 180° (Hotkey: Space or R)">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            Flip 180°
+          </button>
+
+          <!-- Auto-Spin Toggle -->
+          <button type="button" id="btn-spin" class="btn-tool" title="Continuous 360° Spin Inspection (Hotkey: S)" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+            Auto-Spin
+          </button>
+
+          <!-- Split View Toggle -->
+          <button type="button" id="btn-split-view" class="btn-tool" title="Simultaneous Upright & Inverted View">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="9" height="18" rx="1.5"/>
+              <rect x="13" y="3" width="9" height="18" rx="1.5"/>
+            </svg>
+            Split View
+          </button>
+        </div>
+      </div>
+
+      <!-- Canvas Presentation Area -->
+      <div class="canvas-presentation" id="split-canvas-wrapper">
+        <!-- Primary Canvas Container -->
+        <div class="canvas-card" id="primary-canvas-card">
+          <div class="canvas-card-label">Primary View</div>
+          <div class="canvas-svg-wrapper" id="canvas-container">
+            <!-- Dynamic SVG Injected Here -->
+          </div>
+        </div>
+
+        <!-- Inverted Secondary Canvas Container (Visible in Split View) -->
+        <div class="canvas-card inverted-card" id="inverted-canvas-card">
+          <div class="canvas-card-label">Inverted 180° View</div>
+          <div class="canvas-svg-wrapper" id="canvas-container-inverted">
+            <!-- Dynamic Inverted SVG Injected Here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Drawer: Symmetry Analysis & Letter Pairing Rhythm -->
+      <div class="analysis-drawer">
+        <div class="analysis-header">
+          <span class="analysis-title">Letterform Symmetry Pairing</span>
+          <span class="analysis-hint">Each glyph reads upright as the top letter and upside-down as the bottom letter</span>
+        </div>
+        <div class="letter-pairs-strip" id="letter-pairs-strip">
+          <!-- Dynamically populated letter pair pills -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification Feedback -->
+  <div class="toast" id="toast-notification" role="status" aria-live="polite"></div>
+
+  <!-- Application Script (ES6 Module) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
