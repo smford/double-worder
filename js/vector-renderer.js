@@ -158,7 +158,7 @@ export class VectorRenderer {
       pathStyleAttr = `fill="${currentTheme.textColor}" stroke="${currentTheme.cutStroke}" stroke-width="0.3" stroke-linecap="round" stroke-linejoin="round"`;
     } else {
       // filled default
-      pathStyleAttr = `fill="${currentTheme.textColor}" stroke="none"`;
+      pathStyleAttr = `fill="${currentTheme.textColor}" stroke="none" fill-rule="nonzero"`;
     }
 
     // Guidelines

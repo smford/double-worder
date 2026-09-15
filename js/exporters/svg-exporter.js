@@ -48,7 +48,7 @@ export class SvgExporter {
       pathAttributes = `fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linejoin="round" stroke-linecap="round"`;
     } else {
       // filled default
-      pathAttributes = `fill="${fillColor}" stroke="none" fill-rule="evenodd"`;
+      pathAttributes = `fill="${fillColor}" stroke="none" fill-rule="nonzero"`;
     }
 
     const borderElement = includeBorder
