@@ -72,9 +72,10 @@ Designed from three synergistic disciplines:
 double-worder/
 ├── index.html               # Semantic, accessible HTML5 application shell
 ├── css/
-│   └── main.css             # Modern stylesheet (Dark/Paper/Blueprint themes, CSS grid)
+│   └── main.css             # Modern stylesheet (Dark, Paper, Blueprint, Parchment themes, CSS grid)
 ├── js/
 │   ├── app.js               # Application coordinator, DOM event listeners, state management
+│   ├── bundle.js            # Standalone IIFE bundle for local file:// and web execution
 │   ├── ambigram-engine.js   # 180° rotational typography engine & parametric synthesizer
 │   ├── vector-renderer.js   # SVG path transformation, canvas fitting & rotational preview
 │   ├── canvas-sizes.js      # ISO 216 & ANSI paper standards repository
@@ -89,7 +90,9 @@ double-worder/
 │   ├── dxf-validator.js     # Structural parser & validator for DXF files
 │   ├── test-engine.js       # End-to-end integration test
 │   ├── test-dxf.js          # DXF syntax & section validation
-│   └── test-alphabet.js     # Exhaustive 26-letter & random pair stress test
+│   ├── test-alphabet.js     # Exhaustive 26-letter & random pair stress test
+│   ├── test-all-themes.js   # Headless browser verification of all 4 color themes
+│   └── test-browser-features.js # Headless browser UI interaction verification
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml       # Automated GitHub Pages CI/CD workflow
@@ -100,9 +103,16 @@ double-worder/
 
 ---
 
-## 🚀 Hosting on GitHub Pages
+## 🚀 Hosting on GitHub Pages & Local Usage
 
-The application requires **zero build step** and **zero external servers**.
+The application requires **zero external servers** and comes with a pre-built standalone bundle (`js/bundle.js`) committed directly to the repository. It runs instantly out-of-the-box by double-clicking `index.html` locally via `file://`, via `npm start`, or hosted on GitHub Pages.
+
+For local development when modifying modular ES6 sources in `js/`:
+```bash
+npm run build   # Rebuilds js/bundle.js via esbuild
+npm test        # Runs test suite
+npm start       # Serves local directory on http://localhost:3000
+```
 
 ### Automatic Deployment (GitHub Actions)
 1. Push this repository to GitHub on branch `main`.
