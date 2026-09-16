@@ -4,6 +4,7 @@
   "description": "Rotational Ambigram Studio & Vector Generator for GitHub Pages with SVG and DXF exports",
   "type": "module",
   "scripts": {
+    "build": "npx esbuild js/app.js --bundle --outfile=js/bundle.js --format=iife",
     "test": "node tests/test-engine.js && node tests/test-dxf.js && node tests/test-alphabet.js",
     "start": "npx serve ."
   },
